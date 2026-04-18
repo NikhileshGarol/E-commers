@@ -18,11 +18,6 @@ app.use(express.json());
 
 connectDB();
 
-// Health Check
-app.get('/', (req, res) => {
-    res.status(200).json({ message: 'Server is running' });
-});
-
 const seedDatabase = async () => {
     try {
         const count = await User.countDocuments();
@@ -215,6 +210,11 @@ app.post('/api/auth/login', async (req, res) => {
 
 app.get('/', (req, res) => {
     res.send('KiranaKart API is running...');
+});
+
+// Health Check
+app.get('/health', (req, res) => {
+    res.status(200).json({ message: 'Server is running' });
 });
 
 // --- STATISTICS ENDPOINTS ---
