@@ -18,6 +18,11 @@ app.use(express.json());
 
 connectDB();
 
+// Health Check
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Server is running' });
+});
+
 const seedDatabase = async () => {
     try {
         const count = await User.countDocuments();
