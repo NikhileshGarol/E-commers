@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import useAuthStore from '../store/useAuthStore';
+import { API_CONFIG } from '../Api';
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ export default function Register() {
             const payload = { ...formData };
             if (payload.role !== 'vendor') delete payload.store_name;
 
-            await axios.post('http://localhost:5000/api/auth/register', payload);
+            await axios.post(`${API_CONFIG.BASE_URL}/api/auth/register`, payload);
             toast.success('Registration successful! Please login.');
             navigate('/login');
         } catch (err) {

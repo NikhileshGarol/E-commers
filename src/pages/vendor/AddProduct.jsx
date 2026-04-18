@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Upload, Package, Ruler, Hash, Image as ImageIcon, CheckCircle2, Layers } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../../Api';
 
 export default function AddProduct() {
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ export default function AddProduct() {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/products', formData);
+            await axios.post(`${API_CONFIG.BASE_URL}/api/products`, formData);
             toast.success('Product Added Successfully!');
             setFormData({ name: '', category: 'fresh-vegetables', price: '', unit: 'kg', image: '' });
         } catch (error) {

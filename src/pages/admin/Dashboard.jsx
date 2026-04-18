@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DollarSign, ShoppingBag, Users, Store, TrendingUp } from 'lucide-react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API_CONFIG } from '../../Api';
 
 export default function AdminDashboard() {
     const [stats, setStats] = useState({ totalRevenue: 0, activeOrders: 0, totalVendors: 0, totalUsers: 0 });
@@ -12,8 +13,8 @@ export default function AdminDashboard() {
         const fetchData = async () => {
             try {
                 const [statsRes, vendorsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/admin/stats'),
-                    axios.get('http://localhost:5000/api/vendors')
+                    axios.get(`${API_CONFIG.BASE_URL}/api/admin/stats`),
+                    axios.get(`${API_CONFIG.BASE_URL}/api/vendors`)
                 ]);
                 setStats(statsRes.data);
                 setVendors(vendorsRes.data.slice(0, 5)); // Only show top 5 on dashboard

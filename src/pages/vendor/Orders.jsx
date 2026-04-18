@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Package, Clock, CheckCircle2, Truck, MapPin, User, ChevronRight, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../../Api';
 
 export default function VendorOrders() {
     const [orders, setOrders] = useState([]);
@@ -13,7 +14,7 @@ export default function VendorOrders() {
 
     const fetchOrders = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/vendor/orders');
+            const res = await axios.get(`${API_CONFIG.BASE_URL}/api/vendor/orders`);
             setOrders(res.data);
         } catch (err) {
             toast.error("Failed to fetch orders");
@@ -24,7 +25,7 @@ export default function VendorOrders() {
 
     const updateStatus = async (id, status) => {
         try {
-            await axios.put(`http://localhost:5000/api/orders/${id}/status`, { status });
+            await axios.put(`${API_CONFIG.BASE_URL}/api/orders/${id}/status`, { status });
             toast.success(`Order is now ${status}`);
             fetchOrders();
         } catch (err) {

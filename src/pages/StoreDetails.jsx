@@ -4,6 +4,7 @@ import { Star, MapPin, Phone, Package, ArrowLeft, Search, ShoppingBag, Clock, Sh
 import axios from 'axios';
 import useCartStore from '../store/useCartStore';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../Api';
 
 export default function StoreDetails() {
     const { vendorId } = useParams();
@@ -17,8 +18,8 @@ export default function StoreDetails() {
         const fetchStoreData = async () => {
             try {
                 const [vendorRes, productsRes] = await Promise.all([
-                    axios.get(`http://localhost:5000/api/vendors/${vendorId}`),
-                    axios.get(`http://localhost:5000/api/vendors/${vendorId}/products`)
+                    axios.get(`${API_CONFIG.BASE_URL}/api/vendors/${vendorId}`),
+                    axios.get(`${API_CONFIG.BASE_URL}/api/vendors/${vendorId}/products`)
                 ]);
                 setVendor(vendorRes.data);
                 setProducts(productsRes.data);

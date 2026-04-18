@@ -1,8 +1,9 @@
 const axios = require('axios');
+const { API_CONFIG } = require('./api.config');
 
 const register = async (data) => {
     try {
-        const res = await axios.post('http://localhost:5000/api/auth/register', data);
+        const res = await axios.post(`${API_CONFIG.BASE_URL}/api/auth/register`, data);
         console.log(`Success: ${data.name} (${data.role}) - ${res.data.message}`);
     } catch (err) {
         console.error(`Error: ${data.name} (${data.role}) - ${err.response?.data?.message || err.message}`);

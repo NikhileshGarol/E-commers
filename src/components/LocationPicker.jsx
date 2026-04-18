@@ -4,6 +4,7 @@ import { MapPin, Search, Navigation, X, Home, Briefcase, Clock, Loader2, History
 import useAuthStore from '../store/useAuthStore';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { API_CONFIG } from '../Api';
 
 export default function LocationPicker({ isOpen, onClose }) {
     const { updateLocation, user } = useAuthStore();
@@ -17,7 +18,7 @@ export default function LocationPicker({ isOpen, onClose }) {
     useEffect(() => {
         if (isOpen) {
             if (user) {
-                axios.get('http://localhost:5000/api/user/addresses')
+                axios.get(`${API_CONFIG.BASE_URL}/api/user/addresses`)
                     .then(res => setSavedAddresses(res.data))
                     .catch(err => console.error(err));
             }

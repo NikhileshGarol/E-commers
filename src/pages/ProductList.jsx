@@ -4,6 +4,7 @@ import { Filter, ShoppingCart, Star, Plus, Search, ChevronRight, LayoutGrid, Lis
 import useCartStore from '../store/useCartStore';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../Api';
 
 export default function ProductList() {
   const { categoryId } = useParams();
@@ -21,7 +22,7 @@ export default function ProductList() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/products?category=${categoryId || ''}`);
+        const response = await axios.get(`${API_CONFIG.BASE_URL}/api/products?category=${categoryId || ''}`);
         setProducts(response.data);
       } catch (error) {
         console.error("Failed to fetch products", error);

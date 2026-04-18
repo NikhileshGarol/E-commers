@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import { API_CONFIG } from '../Api';
 
 const useAuthStore = create((set) => ({
     user: JSON.parse(localStorage.getItem('user')) || null,
@@ -29,7 +30,7 @@ const useAuthStore = create((set) => ({
         // Persist to DB if logged in
         if (localStorage.getItem('token')) {
             try {
-                await axios.put('http://localhost:5000/api/user/location', location);
+                await axios.put(`${API_CONFIG.BASE_URL}/api/user/location`, location);
             } catch (err) {
                 console.error("Failed to persist location", err);
             }

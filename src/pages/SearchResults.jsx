@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Star, Plus, SearchX } from 'lucide-react';
 import useCartStore from '../store/useCartStore';
+import { API_CONFIG } from '../Api';
 
 export default function SearchResults() {
     const [searchParams] = useSearchParams();
@@ -15,7 +16,7 @@ export default function SearchResults() {
         const fetchResults = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`http://localhost:5000/api/products/search?q=${query}`);
+                const res = await axios.get(`${API_CONFIG.BASE_URL}/api/products/search?q=${query}`);
                 setProducts(res.data);
             } catch (err) {
                 console.error(err);

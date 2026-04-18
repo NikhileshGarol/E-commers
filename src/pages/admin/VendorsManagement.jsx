@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Store, Star, MapPin, Trash2, Phone, User as UserIcon, Edit2, Plus, X, Search, Navigation } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../../Api';
 
 export default function VendorsManagement() {
     const [vendors, setVendors] = useState([]);
@@ -16,7 +17,7 @@ export default function VendorsManagement() {
 
     const fetchVendors = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/vendors');
+            const res = await axios.get(`${API_CONFIG.BASE_URL}/api/admin/vendors`);
             setVendors(res.data);
             setLoading(false);
         } catch (err) {
@@ -39,7 +40,7 @@ export default function VendorsManagement() {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to remove this vendor store?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/admin/users/${id}`);
+            await axios.delete(`${API_CONFIG.BASE_URL}/api/admin/users/${id}`);
             toast.success("Vendor removed");
             setVendors(vendors.filter(v => v._id !== id));
         } catch (err) {
@@ -74,10 +75,10 @@ export default function VendorsManagement() {
             if (editingVendor) {
                 const dataToSend = { ...formData };
                 if (!dataToSend.password) delete dataToSend.password;
-                await axios.put(`http://localhost:5000/api/admin/users/${editingVendor._id}`, dataToSend);
+                await axios.put(`${API_CONFIG.BASE_URL}/api/admin/users/${editingVendor._id}`, dataToSend);
                 toast.success("Vendor profile updated");
             } else {
-                await axios.post('http://localhost:5000/api/admin/users', { ...formData, role: 'vendor' });
+                await axios.post(`${API_CONFIG.BASE_URL}/api/admin/users`, { ...formData, role: 'vendor' });
                 toast.success("New vendor onboarded");
             }
             setIsModalOpen(false);

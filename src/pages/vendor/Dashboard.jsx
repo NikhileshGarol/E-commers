@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DollarSign, ShoppingBag, Package, TrendingUp, Clock, Calendar } from 'lucide-react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { API_CONFIG } from '../../Api';
 
 export default function VendorDashboard() {
     const [stats, setStats] = useState({ totalEarnings: 0, totalOrders: 0, totalProducts: 0, growth: '+10%' });
@@ -12,8 +13,8 @@ export default function VendorDashboard() {
         const fetchData = async () => {
             try {
                 const [statsRes, ordersRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/vendor-stats'),
-                    axios.get('http://localhost:5000/api/vendor/orders')
+                    axios.get(`${API_CONFIG.BASE_URL}/api/vendor-stats`),
+                    axios.get(`${API_CONFIG.BASE_URL}/api/vendor/orders`)
                 ]);
                 setStats(statsRes.data);
                 setRecentOrders(ordersRes.data.slice(0, 5));

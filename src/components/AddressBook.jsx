@@ -3,6 +3,7 @@ import { MapPin, Plus, Trash2, Edit2, CheckCircle2, Home, Briefcase, Navigation 
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import useAuthStore from '../store/useAuthStore';
+import { API_CONFIG } from '../Api';
 
 export default function AddressBook() {
     const { user, updateLocation } = useAuthStore();
@@ -20,7 +21,7 @@ export default function AddressBook() {
 
     const fetchAddresses = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/addresses');
+            const res = await axios.get(`${API_CONFIG.BASE_URL}/api/user/addresses`);
             setAddresses(res.data);
             setLoading(false);
         } catch (err) {
@@ -79,10 +80,10 @@ export default function AddressBook() {
 
             let res;
             if (editingId) {
-                res = await axios.put(`http://localhost:5000/api/user/addresses/${editingId}`, dataToSave);
+                res = await axios.put(`${API_CONFIG.BASE_URL}/api/user/addresses/${editingId}`, dataToSave);
                 toast.success("Address updated");
             } else {
-                res = await axios.post('http://localhost:5000/api/user/addresses', dataToSave);
+                res = await axios.post(`${API_CONFIG.BASE_URL}/api/user/addresses`, dataToSave);
                 toast.success("Address added");
             }
             setAddresses(res.data);
@@ -97,7 +98,7 @@ export default function AddressBook() {
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this address?")) return;
         try {
-            const res = await axios.delete(`http://localhost:5000/api/user/addresses/${id}`);
+            const res = await axios.delete(`${API_CONFIG.BASE_URL}/api/user/addresses/${id}`);
             setAddresses(res.data);
             toast.success("Address removed");
         } catch (err) {
@@ -107,7 +108,7 @@ export default function AddressBook() {
 
     const handleSelect = async (id) => {
         try {
-            const res = await axios.post(`http://localhost:5000/api/user/addresses/${id}/select`);
+            const res = await axios.post(`${API_CONFIG.BASE_URL}/api/user/addresses/${id}/select`);
             updateLocation(res.data.location);
             toast.success("Delivery address updated");
         } catch (err) {

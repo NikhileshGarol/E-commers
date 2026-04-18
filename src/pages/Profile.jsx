@@ -5,6 +5,7 @@ import axios from 'axios';
 import useAuthStore from '../store/useAuthStore';
 import AddressBook from '../components/AddressBook';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../Api';
 
 export default function Profile() {
     const { user, logout } = useAuthStore();
@@ -15,7 +16,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (user) {
-            axios.get('http://localhost:5000/api/user/orders')
+            axios.get(`${API_CONFIG.BASE_URL}/api/user/orders`)
                 .then(res => {
                     setOrders(res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
                     setLoading(false);

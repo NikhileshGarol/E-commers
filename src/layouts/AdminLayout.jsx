@@ -3,6 +3,7 @@ import { Shield, LayoutDashboard, Users, Store, LogOut, ChevronRight, Menu, Bell
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import axios from 'axios';
+import { API_CONFIG } from '../Api';
 
 export default function AdminLayout() {
     const location = useLocation();
@@ -14,7 +15,7 @@ export default function AdminLayout() {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/admin/stats');
+                const res = await axios.get(`${API_CONFIG.BASE_URL}/api/admin/stats`);
                 setStats(res.data);
             } catch (err) {
                 console.error("Admin Layout stats error", err);

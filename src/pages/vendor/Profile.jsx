@@ -3,6 +3,7 @@ import { Store, MapPin, Phone, User, Image as ImageIcon, Info, Save, Navigation 
 import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../../Api';
 
 export default function VendorProfile() {
     const { user, updateLocation } = useAuthStore();
@@ -21,7 +22,7 @@ export default function VendorProfile() {
         const fetchProfile = async () => {
             try {
                 // We could just use 'user' from store, but let's fetch fresh data
-                const res = await axios.get(`http://localhost:5000/api/vendors/${user.id}`);
+                const res = await axios.get(`${API_CONFIG.BASE_URL}/api/vendors/${user.id}`);
                 const data = res.data;
                 setFormData({
                     name: data.owner || data.name || '',
@@ -71,7 +72,7 @@ export default function VendorProfile() {
         e.preventDefault();
         setSaving(true);
         try {
-            const res = await axios.put('http://localhost:5000/api/vendor/profile', formData);
+            const res = await axios.put(`${API_CONFIG.BASE_URL}/api/vendor/profile`, formData);
             toast.success("Profile updated successfully!");
             // Update local store if needed (like address/store name)
             if (formData.location) updateLocation(formData.location);

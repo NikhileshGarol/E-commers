@@ -3,6 +3,7 @@ import { Package, Trash2, Plus, Edit, Search, Tag, MoreVertical } from 'lucide-r
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_CONFIG } from '../../Api';
 
 export default function VendorProducts() {
     const [products, setProducts] = useState([]);
@@ -15,7 +16,7 @@ export default function VendorProducts() {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/vendor-products');
+            const res = await axios.get(`${API_CONFIG.BASE_URL}/api/vendor-products`);
             setProducts(res.data);
             setLoading(false);
         } catch (err) {
@@ -27,7 +28,7 @@ export default function VendorProducts() {
     const handleDelete = async (id) => {
         if (!window.confirm("Remove this product from your store?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/products/${id}`);
+            await axios.delete(`${API_CONFIG.BASE_URL}/api/products/${id}`);
             toast.success("Product removed from listing");
             setProducts(products.filter(p => p._id !== id));
         } catch (err) {

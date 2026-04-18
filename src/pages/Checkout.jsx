@@ -5,6 +5,7 @@ import useCartStore from '../store/useCartStore';
 import useAuthStore from '../store/useAuthStore';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { API_CONFIG } from '../Api';
 
 export default function Checkout() {
     const { cart, clearCart } = useCartStore();
@@ -39,7 +40,7 @@ export default function Checkout() {
         try {
             const deliveryAddress = `${form.address}, ${form.city} - ${form.pincode}. Ph: ${form.phone}`;
 
-            await axios.post('http://localhost:5000/api/orders', {
+            await axios.post(`${API_CONFIG.BASE_URL}/api/orders`, {
                 items: cart,
                 totalAmount: grandTotal,
                 deliveryAddress,

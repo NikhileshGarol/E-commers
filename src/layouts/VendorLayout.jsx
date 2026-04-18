@@ -3,6 +3,7 @@ import { LayoutDashboard, Package, FolderPlus, LogOut, Store, ClipboardList, Use
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import axios from 'axios';
+import { API_CONFIG } from '../Api';
 
 export default function VendorLayout() {
     const location = useLocation();
@@ -14,7 +15,7 @@ export default function VendorLayout() {
     useEffect(() => {
         const fetchOrderCount = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/vendor/orders');
+                const res = await axios.get(`${API_CONFIG.BASE_URL}/api/vendor/orders`);
                 const pending = res.data.filter(o => o.status === 'Pending').length;
                 setNewOrdersCount(pending);
             } catch (err) {

@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { API_CONFIG } from '../Api';
 
 export default function Login() {
   const [phone, setPhone] = useState('9876543210'); // Default for demo convenience
@@ -28,7 +29,7 @@ export default function Login() {
 
     try {
       // Authenticate
-      const res = await axios.post('http://localhost:5000/api/auth/login', { phone, password });
+      const res = await axios.post(`${API_CONFIG.BASE_URL}/api/auth/login`, { phone, password });
       const { user, token } = res.data;
 
       // Get Location if possible

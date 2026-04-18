@@ -6,6 +6,7 @@ import heroImage from '../assets/hero_banner.png';
 import useAuthStore from '../store/useAuthStore';
 import axios from 'axios';
 import LocationPicker from '../components/LocationPicker';
+import { API_CONFIG } from '../Api';
 
 export default function Home() {
   const [vendors, setVendors] = useState([]);
@@ -51,7 +52,7 @@ export default function Home() {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        let url = 'http://localhost:5000/api/vendors';
+        let url = `${API_CONFIG.BASE_URL}/api/vendors`;
         if (user?.location) {
           url += `?lat=${user.location.lat}&lng=${user.location.lng}`;
         }
