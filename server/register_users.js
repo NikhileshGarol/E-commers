@@ -1,10 +1,12 @@
 const axios = require('axios');
 const { API_CONFIG } = require('./api.config');
+const User = require('./models/User');
 
 const register = async (data) => {
     try {
-        const res = await axios.post(`${API_CONFIG.BASE_URL}/api/auth/register`, data);
-        console.log(`Success: ${data.name} (${data.role}) - ${res.data.message}`);
+        //const res = await axios.post(`${API_CONFIG.BASE_URL}/api/auth/register`, data);
+        const user = await User.create(data);
+        console.log(`Success: ${data.name} (${data.role}) - ${user}`);
     } catch (err) {
         console.error(`Error: ${data.name} (${data.role}) - ${err.response?.data?.message || err.message}`);
     }
